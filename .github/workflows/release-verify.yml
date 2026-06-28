@@ -7,15 +7,24 @@ on:
       - release/*/*
       - main
 
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   try:
-    uses: kungfu-trader/workflows/.github/workflows/.release-verify.yml@v1
+    uses: kungfu-systems/workflows/.github/workflows/.release-verify.yml@v2.0-alpha
     with:
       prebuild: false
-      check-format: false
+      build-container-enabled: false
+      setup-python-enabled: false
+      publish-versioning: false
+      publish-aws-ci: false
+      publish-aws-user: false
+      action-bump-version-ref: v4.0-alpha
   verify:
     needs: try
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - name: report
         run: echo verified
