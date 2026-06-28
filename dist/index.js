@@ -203,7 +203,7 @@ exports.deletePublishedPackages = async function (argv, info) {
   const res = await octokit.rest.packages.getAllPackageVersionsForPackageOwnedByOrg({
     package_type: 'npm',
     package_name: info.names,
-    org: 'kungfu-trader',
+    org: argv.owner,
   });
   packageVersion = res.data[0].name;
   console.log(`| Version [${info.delVersion}] needs to be deleted |`);
@@ -213,7 +213,7 @@ exports.deletePublishedPackages = async function (argv, info) {
     const delete_pkg = await octokit.rest.packages.deletePackageVersionForOrg({
       package_type: 'npm',
       package_name: info.names,
-      org: 'kungfu-trader',
+      org: argv.owner,
       package_version_id: res.data[0].id,
     });
     console.log(`[Sucess!] Already has deleted package [${info.names}] with version [${info.delVersion}] \n`);
